@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cursed Blocks</title>
+  </head>
+  <body>
+    <main class="game">
+      <!-- The wrapper lets the overlays sit on top of the canvas. -->
+      <div class="board-wrap">
+        <canvas id="board"></canvas>
+        <!-- Shown for a moment when a level unlocks a new piece. -->
+        <div id="unlock" class="unlock" hidden>
+          New curse unlocked: <strong id="unlock-name"></strong>
+        </div>
+        <!-- `hidden` hides an overlay until main.ts shows it. -->
+        <div id="paused" class="overlay" hidden>
+          <h2>Paused</h2>
+          <p class="hint">press P to continue</p>
+        </div>
+        <div id="game-over" class="overlay" hidden>
+          <h2>Game Over</h2>
+          <p>Score: <strong id="final-score">0</strong></p>
+          <p id="new-best" class="new-best" hidden>New best!</p>
+          <button id="restart" type="button">Restart</button>
+          <p class="hint">or press Enter</p>
+        </div>
+      </div>
+      <aside class="panel">
+        <h1>Cursed Blocks</h1>
+        <h3 class="label">Next</h3>
+        <canvas id="next"></canvas>
+        <dl class="stats">
+          <dt>Score</dt>
+          <dd id="score">0</dd>
+          <dt>Best</dt>
+          <dd id="best">0</dd>
+          <dt>Level</dt>
+          <dd id="level">1</dd>
+          <dt>Lines</dt>
+          <dd id="lines">0</dd>
+        </dl>
+        <h3 class="label">Controls</h3>
+        <ul class="controls">
+          <li><kbd>←</kbd> <kbd>→</kbd> move</li>
+          <li><kbd>↑</kbd> rotate</li>
+          <li><kbd>↓</kbd> soft drop</li>
+          <li><kbd>Space</kbd> hard drop</li>
+          <li><kbd>P</kbd> pause</li>
+        </ul>
+      </aside>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

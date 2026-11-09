@@ -54,7 +54,7 @@ drawing and input are kept in separate files:
 
 ## How I built this
 
-I built it with [Claude Code](https://www.anthropic.com/claude-code), an AI coding agent, one
+I built it with [Claude Code](https://www.anthropic.com/claude-code), one
 step at a time: the grid, then the pieces, gravity, controls, collisions, line clearing,
 scoring, game over and finally polish. The rules I gave it are in [CLAUDE.md](CLAUDE.md).
 

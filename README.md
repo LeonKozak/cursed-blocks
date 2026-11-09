@@ -4,8 +4,6 @@ A falling-block puzzle game where none of the pieces are the ones you're used to
 classic four-cube shapes, you get awkward pieces of 2 to 6 cubes, and from level 2 to level 6 a
 new, nastier "curse" piece joins the game as it speeds up.
 
-**Play it here:** https://leonkozak.github.io/cursed-blocks/
-
 ![Cursed Blocks gameplay](docs/screenshot.png)
 
 ## Features

@@ -6,7 +6,11 @@ new, nastier "curse" piece joins the game as it speeds up.
 
 **▶️ Play it in your browser:** https://leonkozak.github.io/cursed-blocks/
 
+<<<<<<< HEAD
 <img width="655" height="702" alt="Screenshot 2026-11-09 095035" src="https://github.com/user-attachments/assets/f2f7fe30-2a94-4df4-9a91-79baeeec0c93" />
+=======
+<img src="docs/gameplay.gif" alt="Cursed Blocks gameplay: pieces falling and stacking, with the next piece, score and controls in the side panel" width="500">
+>>>>>>> e4d24e2 (Add gameplay GIF to README)
 
 ## Features
 

@@ -4,6 +4,8 @@ A falling-block puzzle game where none of the pieces are the ones you're used to
 classic four-cube shapes, you get awkward pieces of 2 to 6 cubes, and from level 2 to level 6 a
 new, nastier "curse" piece joins the game as it speeds up.
 
+**▶️ Play it in your browser:** https://leonkozak.github.io/cursed-blocks/
+
 <img width="655" height="702" alt="Screenshot 2026-11-09 095035" src="https://github.com/user-attachments/assets/f2f7fe30-2a94-4df4-9a91-79baeeec0c93" />
 
 ## Features
@@ -28,7 +30,7 @@ npm install
 npm run dev
 ```
 
-Then open http://localhost:5173.
+Then open http://localhost:5173/cursed-blocks/.
 
 Other commands:
 
@@ -51,6 +53,10 @@ drawing and input are kept in separate files:
 | `src/renderer.ts` | All the canvas drawing, with no game logic |
 | `src/input.ts` | Keyboard controls, which only call game actions |
 | `src/main.ts` | Connects everything and runs the game loop |
+
+**Deployment:** every push to `main` runs a GitHub Actions workflow
+(`.github/workflows/deploy.yml`) that type-checks and builds the game, then publishes it to
+GitHub Pages. So the live version always matches the code.
 
 ## How I built this
 

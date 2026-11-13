@@ -1,39 +1,50 @@
-# CLAUDE.md
+# Cursed Blocks
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+A falling-block puzzle game I'm building in TypeScript, drawn on an HTML canvas and bundled
+with Vite. No game engine or UI framework.
 
-## Project
+The twist: it doesn't use the classic four-cube pieces. It has its own set of 12 pieces made of
+2 to 6 cubes, and a new "curse" piece unlocks at each level from 2 to 6. The name and look are
+my own, so don't use the Tetris name or copy its style.
 
-"Cursed Blocks" — a falling-block puzzle game in TypeScript, rendered on an HTML `<canvas>`, bundled with Vite. No UI framework. Original name and visual style (do not use the Tetris name/branding or copy its look). Cursed Blocks uses its **own 12-piece set** of 2- to 6-cube shapes, not the classic 4-cube shapes. Level 1: Duo, Line (helpers), Corner, LongL, Step, TeeLong, Chunk; then one unlocks per level: Bridge (2), Plus (3), Zag (4), Fork (5), Crown (6). Keep piece matrices square and at most 4×4 so rotation and the 4-cell Next preview keep working.
+## Rules
+- Work only on the step I ask for. Don't build ahead.
+- Keep the code simple and readable, with no extra libraries. I'm learning TypeScript, so add a
+  short comment when you use something new, and I must be able to explain every line.
+- After each step, briefly explain what you changed and why, then stop.
+- Don't commit. I'll commit myself.
+- Keep README.md up to date when features or controls change.
+
+## The pieces
+- Level 1: Duo, Line, Corner, LongL, Step, TeeLong and Chunk.
+- Then one curse per level: Bridge (2), Plus (3), Zag (4), Fork (5) and Crown (6).
+- Every piece matrix must be square and at most 4×4, so rotation and the Next preview keep
+  working.
+
+## Files (all in `src/`)
+- `types.ts`: shared types (cells, the grid, pieces, game state).
+- `pieces.ts`: the piece table with colours and unlock levels, rotation, and the shuffled bag
+  that picks the next piece.
+- `board.ts`: the grid: collisions, placing pieces and clearing lines.
+- `game.ts`: the rules: gravity, moves, scoring (100/300/500/800 × level), levels (every 10
+  lines), pause, game over and restart.
+- `renderer.ts`: all the drawing: board, ghost piece, current piece, line-clear flash and the
+  Next preview. No game logic here.
+- `input.ts`: keyboard controls, which only call game actions.
+- `main.ts`: connects everything, runs the game loop and updates the side panel. The high score
+  is saved in localStorage.
+
+Keep the game logic separate from the drawing and the input.
+
+## Checking changes
+There are no tests yet. TypeScript runs in strict mode, so unused variables and type mistakes
+fail the build. After each change, run `npm run typecheck`, then play it in the browser.
 
 ## Commands
+- `npm run dev`: run it locally at http://localhost:5173/cursed-blocks/
+- `npm run typecheck`: check the TypeScript without building
+- `npm run build`: type check, then build into `dist/`
+- `npm run preview`: serve the built version
 
-- `npm run dev` — Vite dev server with hot reload (http://localhost:5173)
-- `npm run typecheck` — `tsc --noEmit` type check only
-- `npm run build` — type check, then production build to `dist/`
-- `npm run preview` — serve the built `dist/`
-
-There is no test runner or linter configured. Verify changes with `npm run typecheck` / `npm run build`, then in the browser.
-
-## How we work
-
-The user is learning and building this **step by step** from the plan in `C:\Users\leron\.claude\plans\i-want-to-create-polymorphic-star.md`. Implement one step at a time, keep code simple and readable (no extra libraries or abstractions), add short comments explaining new TypeScript concepts, and explain what changed after each step. Don't jump ahead to later steps.
-
-Plan steps: 1 setup/grid (done) → 2 types + `Board` class (done) → 3 pieces (done) → 4 game loop/gravity (done) → 5 controls (done) → 6 collision/locking (done) → 7 line clearing (done) → 8 score/levels (done) → 9 game over/restart + line-clear flash (done) → 10 polish (done): next preview, ghost piece, pause (P + auto-pause on tab switch), high score in `localStorage`. All plan steps complete.
-
-## Architecture
-
-Entry point: `index.html` loads `src/main.ts` as an ES module; `main.ts` imports `src/style.css` (made possible by `src/vite-env.d.ts`). Currently: `types.ts` (Cell, Grid, Matrix, PieceType, Piece, GameState, LineFlash), `board.ts` (Board grid storage, `collides()` vs walls/floor/landed blocks, `merge()`, `clearLines()` returns cleared row indices), `pieces.ts` (`PIECES` table: name/color/unlockLevel/matrix per type; `unlockedTypes`, `typesUnlockingAt`, `createPiece`, `rotateClockwise`, `PieceBag` shuffled-bag picker), `game.ts` (Game: current piece, gravity in `update(dt)`, move/softDrop/hardDrop/rotate with wall nudges; `lockPiece()` merges, clears lines, adds score (100/300/500/800 × level), level = lines/10 + 1 speeds up gravity; pieces from `PieceBag`, `unlockNotice` banner on level-up unlocks, `nextPiece`, `ghostPiece()`, `togglePause()`; `state` playing/paused/gameover, gameover set when a new piece spawns overlapping, `restart()`, `flash` fades over `FLASH_DURATION_MS`; actions ignored when not playing), `input.ts` (`setupInput`: keyboard → game actions, P pauses, Enter restarts on game over), `renderer.ts` (`draw(game)`: board, ghost outline, current piece, line-clear flash, and the Next preview on a second canvas `#next`), `main.ts` (constants `COLS=10`, `ROWS=20`, `CELL_SIZE=30`, `requestAnimationFrame` loop, `updatePanel()` copies score/level/lines into the side panel and toggles the `#unlock` banner and `#paused`/`#game-over` overlays + Restart button in `index.html`; high score saved in `localStorage` key `cursed-blocks-high-score`). `README.md` is the GitHub readme — keep it in sync with features and controls..
-
-Target module layout as steps progress (all in `src/`):
-- `types.ts` — shared types (Cell, Matrix, Piece, GameState)
-- `pieces.ts` — the piece table, unlock levels, rotation, shuffled bag
-- `board.ts` — `Board` class: grid storage, `collides()`, `merge()`, `clearLines()`
-- `game.ts` — `Game` class: state, `update(dt)`, scoring/levels, game over
-- `renderer.ts` — `Renderer` class: all canvas drawing (no game logic)
-- `input.ts` — keyboard → game actions
-- `main.ts` — wires canvas, input, and the `requestAnimationFrame` loop
-
-Keep logic (board/game) separate from drawing (renderer) and input.
-
-`tsconfig.json` is `strict` with `noUnusedLocals`/`noUnusedParameters`, so unused variables fail the type check.
+Every push to `main` builds the game and publishes it to GitHub Pages
+(`.github/workflows/deploy.yml`).

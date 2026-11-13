@@ -46,5 +46,4 @@ fail the build. After each change, run `npm run typecheck`, then play it in the 
 - `npm run build`: type check, then build into `dist/`
 - `npm run preview`: serve the built version
 
-Every push to `main` builds the game and publishes it to GitHub Pages
-(`.github/workflows/deploy.yml`).
+
